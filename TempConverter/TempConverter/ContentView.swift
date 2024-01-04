@@ -9,46 +9,90 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var inputTemperature = 0.0
-    @State private var inputUnit = "Celsius"
-    @State private var outputUnit = "Fahrenheit"
+    @State private var inputUnit = "C"
+    @State private var outputUnit = "F"
+    @FocusState private var amountIsFocused: Bool
     
-    let inputUnits = ["Celsius", "Fahrenheit", "Kelvin", "Rankine"]
-    let outputUnits = ["Celsius", "Fahrenheit", "Kelvin", "Rankine"]
+    let inputUnits = ["C", "F", "K", "R"]
+    let outputUnits = ["C", "F", "K", "R"]
     
     var convertToCentigrade: Double{
-        if inputUnit == "Celsius" {
+        if inputUnit == "C" {
             return inputTemperature
-        } else if inputUnit == "Fahrenheit" {
-            return (inputTemperature - 32.0) * (5/9)
-        } else if inputUnit == "Kelvin" {
-            return inputTemperature - 273.0
+        } else if inputUnit == "F" {
+            return ((inputTemperature - 32.0) * (5/9))
+        } else if inputUnit == "K" {
+            return (inputTemperature - 273.0)
+        } else if inputUnit == "R" {
+            return ((inputTemperature - 491.67) * (5/9))
         } else {
-            return (inputTemperature - 491.67) * (5/9)
+            return 0
         }
     }
     
     var convertedUnit: Double{
-        if outputUnit == "Celsius"{
-            return inputTemperature
-        } else if outputUnit == "Fahrenheit"{
+        if outputUnit == "C"{
+            return convertToCentigrade
+        } else if outputUnit == "F"{
             return convertToCentigrade * (9/5) + 32.0
-        } else if outputUnit == "Kelvin"{
+        } else if outputUnit == "K"{
             return convertToCentigrade + 273.0
-        } else {
+        } else if outputUnit == "R" {
             return convertToCentigrade * (9/5) + 491.67
+        } else {
+            return 0
         }
     }
 
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+        NavigationStack{
+            Form{
+                Section("Input Degrees"){
+                    TextField("Input Temperature", value: $inputTemperature, format:.number)
+                        .keyboardType(.decimalPad)
+                        .focused($amountIsFocused)
+                }
+                
+                Section("Input Units"){
+                    Picker("Input Units", selection: $inputUnit){
+                        ForEach(inputUnits, id:\.self){
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
+                /*Section("Converted to Centigrade"){
+                    Text(convertToCentigrade, format:.number)
+                }*/
+                
+                Section("Output Units"){
+                    Picker("Output Units", selection: $outputUnit){
+                        ForEach(outputUnits, id:\.self){
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
+                Section("Output Degrees"){
+                    Text("\(convertedUnit.formatted(.number.precision(.fractionLength(1))))°")
+                }
+            }
+            .navigationTitle("TempConverter")
+            .toolbar {
+                if amountIsFocused {
+                    Button("Done"){
+                        amountIsFocused = false
+                    }
+                }
+            }
         }
-        .padding()
+        
     }
+
 }
 
 #Preview {
