@@ -14,6 +14,11 @@ struct ContentView: View {
     
     @State private var showingScore = false
     @State private var scoreTitle = ""
+    @State private var score = 0
+    @State private var currentAnswers = 0
+    @State private var gameOver = false
+    
+    let maxAnswers = 8
     
     var body: some View {
         ZStack{
@@ -57,7 +62,10 @@ struct ContentView: View {
                 Spacer()
                 Spacer()
                 
-                Text("Score: ???")
+                Text("Score: \(score)")
+                    .foregroundStyle(.white)
+                    .font(.title.bold())
+                Text("Guesses: \(currentAnswers)")
                     .foregroundStyle(.white)
                     .font(.title.bold())
                 
@@ -68,18 +76,21 @@ struct ContentView: View {
         .alert(scoreTitle, isPresented: $showingScore){
             Button("Continue", action: askQuestion)
         } message: {
-            Text("Your score is ???")
+            Text("Your score is \(score)")
         }
-        
+
         /*Button("Show alert"){
             showingAlert = true
-        }
-        .alert("Important message", isPresented: $showingAlert){
-            Button("Delete", role: .destructive){}
-            Button("Cancel", role: .cancel){}
-        } message: {
-            Text("Please read this")
         }*/
+        
+        
+        .alert("Game Over!", isPresented: $gameOver){
+            Button("Restart Game", action: reset)
+            /*Button("Delete", role: .destructive){}
+            Button("Cancel", role: .cancel){}*/
+        } message: {
+            Text("You scored \(score) out of 8!")
+        }
         
         /*VStack {
          Button("Button 1"){}
@@ -130,17 +141,42 @@ struct ContentView: View {
         //.ignoresSafeArea()
     }
     func flagTapped(_ number: Int){
-        if number == correctAnswer{
+        if number == correctAnswer && currentAnswers < 7 {
             scoreTitle = "Correct!"
+            score += 1
+            currentAnswers += 1
+            showingScore = true
+            gameOver = false
+        } else if number == correctAnswer && currentAnswers == 7 {
+            scoreTitle = "Correct!"
+            score += 1
+            currentAnswers += 1
+            showingScore = false
+            gameOver = true
+        }
+        else if number != correctAnswer && currentAnswers == 7 {
+            scoreTitle = "Wrong! That's the flag of \(countries[number])."
+            currentAnswers += 1
+            showingScore = false
+            gameOver = true
         } else {
             scoreTitle = "Wrong! That's the flag of \(countries[number])."
+            currentAnswers += 1
+            showingScore = true
+            gameOver = false
         }
-        showingScore = true
+        //showingScore = true
     }
+    
     
     func askQuestion(){
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+    }
+    
+    func reset(){
+        score = 0
+        currentAnswers = 0
     }
 }
 
