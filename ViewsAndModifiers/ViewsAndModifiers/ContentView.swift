@@ -22,6 +22,20 @@ struct capsuleText: View{
     
 }
 
+struct LargeBlue: ViewModifier{
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundStyle(.blue)
+    }
+}
+
+extension View {
+    func largeBlueStyle() -> some View{
+        modifier(LargeBlue())
+    }
+}
+
 struct Title: ViewModifier{
     func body(content: Content) -> some View {
         content
@@ -105,6 +119,8 @@ struct ContentView: View {
                 .foregroundStyle(.white)
             capsuleText(text: "Second")
                 .foregroundStyle(.yellow)
+            Text("Hello")
+                .largeBlueStyle()
         }
         
         /*VStack{
