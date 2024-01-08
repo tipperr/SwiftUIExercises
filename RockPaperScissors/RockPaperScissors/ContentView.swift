@@ -49,7 +49,7 @@ struct ContentView: View {
             HStack {
                 ForEach(possibleMoves, id: \.self) { move in
                     Button(action: {
-                        isWinning.toggle()
+                        //isWinning.toggle()
                         currentAnswers += 1
                         gameOverCheck()
                         checkAnswer(move)
@@ -99,14 +99,15 @@ struct ContentView: View {
     
     func newAppChoice(){
         appChoice = Int.random(in: 0...2)
+        isWinning.toggle()
     }
     
     func checkAnswer(_ move: String){
         showingScore = true
         userMove = move
-        if move == losingMoves[appChoice] && isWinning == false {
+        if move == losingMoves[appChoice] && isWinning == true {
             score += 1
-        } else if move == winningMoves[appChoice] && isWinning == true {
+        } else if move == winningMoves[appChoice] && isWinning == false {
             score += 1
         }else {
             score = score
