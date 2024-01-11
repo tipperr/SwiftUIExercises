@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
+    @State private var score = 0
     //let people = ["Finn", "Leia", "Luke", "Rey"]
     
     
@@ -30,6 +31,7 @@ struct ContentView: View {
                         HStack{
                             Image(systemName: "\(word.count).circle")
                             Text(word)
+                                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         }
                     }
                 }
@@ -42,7 +44,13 @@ struct ContentView: View {
             } message: {
                 Text(errorMessage)
             }
+            .toolbar{
+                Button("New Game", action: newGame)
+            }
         }
+        //Button("New Game", action: newGame)
+        Text("Score: \(score)")
+            .font(.title.bold())
     }
         //Playing with lists:
         /*List(people, id:\.self){
@@ -74,6 +82,17 @@ struct ContentView: View {
                 return
             }
             
+            guard isLongEnough(word: answer) else {
+                wordError(title: "Word too short.", message: "Get a better vocabulary.")
+                return
+            }
+            
+            guard isNotSame(word: answer) else {
+                wordError(title: "Word the same as the root word.", message: "That's really egregious.")
+                return
+            }
+            
+            score += answer.count * answer.count
             
             withAnimation{
                 usedWords.insert(answer, at: 0)
@@ -117,11 +136,26 @@ struct ContentView: View {
         return misspelledRange.location == NSNotFound
     }
     
+    func isLongEnough(word: String) -> Bool{
+        word.count > 3
+    }
+    
+    func isNotSame(word: String) -> Bool{
+        word != rootWord
+    }
+        
     func wordError(title: String, message: String){
         errorTitle = title
         errorMessage = message
         showingError = true
     }
+    
+    func newGame(){
+        startGame()
+        usedWords = [String]()
+        score = 0
+    }
+    
     
     //Playing with string chcecking:
     /*func testStrings(){
