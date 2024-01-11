@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var errorMessage = ""
     @State private var showingError = false
     @State private var score = 0
+    @State private var wordCount = 1
     //let people = ["Finn", "Leia", "Luke", "Rey"]
     
     
@@ -32,6 +33,7 @@ struct ContentView: View {
                             Image(systemName: "\(word.count).circle")
                             Text(word)
                                 .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                            
                         }
                     }
                 }
@@ -92,7 +94,9 @@ struct ContentView: View {
                 return
             }
             
-            score += answer.count * answer.count
+            wordCount += 1
+            
+            score += answer.count * wordCount
             
             withAnimation{
                 usedWords.insert(answer, at: 0)
