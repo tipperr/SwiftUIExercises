@@ -29,6 +29,9 @@ struct ContentView: View {
     @State private var score = 0
     @State private var currentAnswers = 0
     @State private var gameOver = false
+    @State private var animationAmount = 0.0
+    @State private var reverseAnimation = 0.0
+    @State private var tapped = false
     
     let maxAnswers = 8
     
@@ -58,12 +61,25 @@ struct ContentView: View {
                     
                     ForEach(0..<3){ number in
                         Button {
-                            flagTapped(number)
-                        } label: {
+                            self.flagTapped(number)
+                            self.tapped.toggle()
+                            //isTapped[number] = true
+                            //print(isTapped)
+                            withAnimation(
+                                .spring(duration: 1,
+                                        bounce: 0.5)){
+                                            animationAmount += (number == self.correctAnswer ? 360 : -360)
+                            }                        }
+                    label: {
                             /*Image(countries[number])
                                 .clipShape(.capsule)
                                 .shadow(radius: 5)*/
                             FlagImage(imageName: countries[number])
+                                .rotation3DEffect(
+                                                        .degrees(animationAmount),
+                                                        axis: (x: 0.0, y: (number == self.correctAnswer && self.tapped) ? 1 : -1, z: 0.0)
+                                                    )
+                                .opacity((number != self.correctAnswer && self.tapped) ? 0.25 : 1)
                         }
                     }
                 }
@@ -81,7 +97,6 @@ struct ContentView: View {
                 Text("Guesses: \(currentAnswers)")
                     .foregroundStyle(.white)
                     .font(.title.bold())
-                
                 Spacer()
             }
             .padding()
@@ -179,17 +194,20 @@ struct ContentView: View {
             gameOver = false
         }
         //showingScore = true
-    }
+        }
     
     
     func askQuestion(){
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        tapped = false
     }
     
     func reset(){
         score = 0
         currentAnswers = 0
+        tapped = false
+        askQuestion()
     }
 }
 
