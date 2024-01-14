@@ -10,7 +10,12 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var max = 2
+    @State private var newAnswer = Int()
+    @State private var oldAnswers = [Int]()
     @State private var questions = 5
+    @State private var questionList = [(0, 0)]
+    @State private var inGame: Bool? = nil
+    @FocusState private var answerIsFocused: Bool
     
     let questionOptions = [5, 10, 20]
     
@@ -29,38 +34,99 @@ struct ContentView: View {
                     .pickerStyle(.segmented)
                 }
                 
-                HStack{
+                HStack {
                     Spacer()
-                    Button("Start Game", action: generateQuestions)
+                    Button(inGame == nil ? "Start Game" : "New Game", action: {
+                        if inGame == nil {
+                            questionList = generateQuestions()
+                            inGame = true
+                        } else {
+                            reset()
+                        }
+                    })
                     Spacer()
                 }
+
                 
-                Section("Questions"){
-                    List{
-                        
+                Section{
+                    Text("Questions:")
+                    
+                    if inGame == true{
+                        //Text("In game")
+                        Text("\(questionList[1])")
+                    }
+                    /*List(questionList, id:.\self){
+                        Text($0)
+                    }*/
+                    }
+            
+                
+            List{
+                Section{
+                    HStack{
+                        TextField("Your answer", value: $newAnswer, format: .number)
+                            .keyboardType(.decimalPad)
+                            .focused($answerIsFocused)
+                        Button("Enter", action: addAnswer)
                     }
                 }
+                
+                Section{
+                    ForEach(oldAnswers, id:\.self){ number in
+                        Text("\(number)")
+                    }
+                }
+                
+            }
                 
                 }
             .navigationTitle("Multiplication Tables!")
             .toolbar{
-                Button("New Game"){
-                    
+                if answerIsFocused {
+                    Button("Done"){
+                        answerIsFocused = false
+                    }
                 }
             }
         }
 
     }
-    func generateQuestions(){
-        var questionList = [(Int, Int)]()
-        print(questionList)
+    func generateQuestions() -> [(Int, Int)]{
+        //var questionList = [(Int, Int)]()
+        //print(questionList)
         for number in Range(1...questions){
             questionList.append(
                 (Int.random(in: 1...max), Int.random(in: 1...12))
             )
         }
         print(questionList)
-        return
+        inGame = true
+        return questionList
+    }
+    
+    func addAnswer(){
+        
+        let answer = newAnswer
+        
+        withAnimation{
+            oldAnswers.insert(answer, at: 0)
+        }
+        
+        resetText()
+    }
+    
+    func resetText(){
+        newAnswer = Int()
+    }
+    
+    func reset(){
+        max = 2
+        questions = 5
+        questionList = [(0, 0)]
+        inGame = nil
+        newAnswer = Int()
+        oldAnswers = [Int]()
+        print(questionList)
     }
 }
 
