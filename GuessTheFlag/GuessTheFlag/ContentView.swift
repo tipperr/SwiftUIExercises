@@ -69,7 +69,8 @@ struct ContentView: View {
                                 .spring(duration: 1,
                                         bounce: 0.5)){
                                             animationAmount += (number == self.correctAnswer ? 360 : -360)
-                            }                        }
+                                        }
+                        }
                     label: {
                             /*Image(countries[number])
                                 .clipShape(.capsule)
