@@ -86,38 +86,69 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            List{
-                ForEach(expenses.items /* not required due to "Identifiable", id:\.id*/){ item in
-                    HStack{
-                        VStack(alignment: .leading){
-                            Text(item.name)
-                                .font(.headline)
-                            
-                            Text(item.type)
+            VStack{
+                Text("Personal Expenses")
+                    .font(.title)
+                List{
+                    ForEach(expenses.items /* not required due to "Identifiable", id:\.id*/){ item in
+                        if item.type == "Personal"{
+                            HStack{
+                                VStack(alignment: .leading){
+                                    Text(item.name)
+                                        .font(.headline)
+                                    
+                                    //Text(item.type)
+                                }
+                                
+                                Spacer()
+                                
+                                Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                                    .foregroundStyle(item.amount >= 100 ? .green : (item.amount >= 10 ? .red : .blue))
+                            }
                         }
-                        
-                        Spacer()
-                        
-                        Text(item.amount, format: .currency(code: "USD"))
+                    }
+                    .onDelete(perform: removeItems)
+                }
+                Text("Business Expenses")
+                    .font(.title)
+                List{
+                    ForEach(expenses.items /* not required due to "Identifiable": id:\.id*/){ item in
+                        if item.type == "Business"{
+                            HStack{
+                                VStack(alignment: .leading){
+                                    Text(item.name)
+                                        .font(.headline)
+                                    
+                                    //Text(item.type)
+                                }
+                                
+                                Spacer()
+                                
+                                Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                                    .foregroundStyle(item.amount >= 100 ? .green : (item.amount >= 10 ? .red : .blue))
+                            }
+                        }
+                    }
+                    .onDelete(perform: removeItems)
+                }
+                
+                }
+                .navigationTitle("iExpense")
+                .background(.pink)
+                .toolbar{
+                    Button("Add expense", systemImage: "plus"){
+                        showingAddExpense = true
+                        //This is for testing only:
+                        /*let expense = ExpenseItem(name: "Test", type: "Personal", amount: 5)
+                         expenses.items.append(expense)*/
                     }
                 }
-                .onDelete(perform: removeItems)
-            }
-            .navigationTitle("iExpense")
-            .toolbar{
-                Button("Add expense", systemImage: "plus"){
-                    showingAddExpense = true
-                    //This is for testing only:
-                    /*let expense = ExpenseItem(name: "Test", type: "Personal", amount: 5)
-                    expenses.items.append(expense)*/
+                .sheet(isPresented: $showingAddExpense){
+                    AddView(expenses: expenses)
                 }
             }
-            .sheet(isPresented: $showingAddExpense){
-                AddView(expenses: expenses)
-            }
         }
-    }
-        
+    
     
     func removeItems(at offsets:IndexSet){
         expenses.items.remove(atOffsets: offsets)
