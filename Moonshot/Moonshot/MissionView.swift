@@ -34,10 +34,11 @@ struct MissionView: View {
                 
                 
                 VStack(alignment: .leading){
-                    Rectangle()
+                    DrawRectangle()
+                    /*Rectangle()
                         .frame(height: 2)
                         .foregroundStyle(.lightBackground)
-                        .padding(.vertical)
+                        .padding(.vertical)*/
                     
                     Text("Mission Highlights")
                         .font(.title.bold())
@@ -45,10 +46,12 @@ struct MissionView: View {
                     
                     Text(mission.description)
                     
-                    Rectangle()
+                    DrawRectangle()
+                    
+                    /*Rectangle()
                         .frame(height: 2)
                         .foregroundStyle(.lightBackground)
-                        .padding(.vertical)
+                        .padding(.vertical)*/
                     
                     Text("Crew")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/.bold())
@@ -59,7 +62,8 @@ struct MissionView: View {
                 ScrollView(.horizontal, showsIndicators: false){
                     HStack{
                         ForEach(crew, id:\.role) { CrewMember in
-                            NavigationLink{
+                            CrewView(role: CrewMember.role, astronaut: CrewMember.astronaut)
+                            /*NavigationLink{
                                 //Text("Astronaut Details")
                                 AstronauatView(astronaut: CrewMember.astronaut)
                             } label: {
@@ -84,7 +88,7 @@ struct MissionView: View {
                                 }
                                 
                                 .padding(.horizontal)
-                            }
+                            }*/
                         }
                     }
                 }
