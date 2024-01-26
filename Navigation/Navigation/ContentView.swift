@@ -200,7 +200,7 @@ struct ContentView: View {
         }*/
         
         
-        /*NavigationStack{
+        NavigationStack{
             //NavigationLink("Tap Me!"){
                 //DetailVIew(number: 556)
             List(0..<100){ i in
@@ -209,7 +209,13 @@ struct ContentView: View {
             .navigationDestination(for: Int.self){ selection in
                 Text("You selected \(selection)")
             }
-            }*/
+            }
+        
+        NavigationStack{
+            NavigationLink("Tap Me!"){
+                //DetailVIew(number: 556)
+            }}
+        
         }
     }
 
