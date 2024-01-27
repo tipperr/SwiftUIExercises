@@ -10,6 +10,7 @@ import SwiftUI
 struct MissionView: View {
     
     struct CrewMember {
+        var id = UUID()
         let role: String
         let astronaut: Astronaut
     }
