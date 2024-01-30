@@ -40,43 +40,36 @@ struct ContentView: View {
     @State private var showingAddActivity = false
     @State private var selectedActivity: Activity?
     
-    var sortedActivities: [Activity] {
-            return activities.myActivities.sorted { $0.dates.max() ?? Date.distantPast > $1.dates.max() ?? Date.distantPast }
-        }
-    
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             VStack {
-                List{
-                    ForEach(sortedActivities) { displayedActivity in
-                        NavigationLink(destination: ActivityDetail(activity: displayedActivity)) {
-                            Text("\(displayedActivity.name): Performed")
-                            Text("\(displayedActivity.count) \(displayedActivity.count == 1 ? "time" : "times")")
+                List {
+                    ForEach($activities.myActivities) { $activity in
+                        NavigationLink(destination: ActivityDetail(activity: $activity)) {
+                            Text("\(activity.name): Performed")
+                            Text("\(activity.count) \(activity.count == 1 ? "time" : "times")")
                         }
                     }
                     .onDelete(perform: removeItems)
                 }
-                
             }
             .navigationTitle("Activity Tracker")
-            .toolbar{
-                Button("Add Activity"){
+            .toolbar {
+                Button("Add Activity") {
                     showingAddActivity = true
                 }
             }
-            .sheet(isPresented: $showingAddActivity){
+            .sheet(isPresented: $showingAddActivity) {
                 AddActivity(activities: activities)
-                
             }
         }
-        
-        
     }
-    func removeItems(at offsets:IndexSet){
+
+    func removeItems(at offsets: IndexSet) {
         activities.myActivities.remove(atOffsets: offsets)
     }
-    
 }
+
 
 #Preview {
     ContentView()
