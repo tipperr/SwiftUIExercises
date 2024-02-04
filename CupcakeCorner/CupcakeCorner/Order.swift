@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class Order: Codable {
+class Order: Codable, ObservableObject {
     static let types = ["Vanilla", "Strawberry", "Chocolate", "Rainbow"]
     
     enum CodingKeys: String, CodingKey {
@@ -39,10 +39,26 @@ class Order: Codable {
     var addSprinkles = false
     
     //Save the below data to UserDefaults
-    var name = ""
-    var streetAddress = ""
-    var city = ""
-    var zip = ""
+    var name = UserDefaults.standard.string(forKey: "name") ?? "" {
+          didSet {
+              UserDefaults.standard.setValue(name, forKey: "name")
+          }
+      }
+    var streetAddress = UserDefaults.standard.string(forKey: "streetAddress") ?? "" {
+        didSet{
+            UserDefaults.standard.setValue(streetAddress, forKey: "streetAddress")
+        }
+    }
+    var city = UserDefaults.standard.string(forKey: "city") ?? "" {
+        didSet{
+            UserDefaults.standard.setValue(city, forKey: "city")
+        }
+    }
+    var zip = UserDefaults.standard.string(forKey: "zip") ?? ""{
+        didSet{
+            UserDefaults.standard.setValue(zip, forKey: "zip")
+        }
+    }
     //Save the above data to UserDefaults
     
     var hasValidAddress: Bool {
