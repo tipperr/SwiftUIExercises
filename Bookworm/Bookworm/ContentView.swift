@@ -14,7 +14,24 @@ struct ContentView: View {
     @State private var showingAddScreen = false
     var body: some View {
         NavigationStack{
-            Text("Count is: \(books.count)")
+            //Text("Count is: \(books.count)")
+            List{
+                ForEach(books){ book in
+                    NavigationLink(value: book){
+                        HStack{
+                            EmojiRatingView(rating: book.rating)
+                                .font(.largeTitle)
+                            
+                            VStack(alignment: .leading){
+                                Text(book.title)
+                                    .font(.headline)
+                                Text(book.author)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                }
+            }
                 .navigationTitle("Bookworm")
                 .toolbar{
                     ToolbarItem(placement: .topBarTrailing){
