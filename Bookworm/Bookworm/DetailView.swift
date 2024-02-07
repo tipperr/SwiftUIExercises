@@ -8,12 +8,20 @@
 import SwiftData
 import SwiftUI
 
+
 struct DetailView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     @State private var showingDeleteAlert = false
     
     let book: Book
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }()
     
     var body: some View {
         ScrollView{
@@ -37,6 +45,8 @@ struct DetailView: View {
             
             Text(book.review)
                 .padding()
+            
+            Text("Date Added: \(book.dateAdded, formatter: dateFormatter)")
             
             RatingView(rating: .constant(book.rating))
                 .font(.largeTitle)
@@ -67,6 +77,7 @@ struct DetailView: View {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: Book.self, configurations: config)
+        //let customDate = Date(year: 2023, month: 11, day: 7)
         let example = Book(title: "Test", author: "Test", genre: "Fantasy", review: "Test", rating: 3)
         
         return DetailView(book: example)

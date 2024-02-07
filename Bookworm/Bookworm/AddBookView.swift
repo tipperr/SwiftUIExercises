@@ -16,6 +16,8 @@ struct AddBookView: View {
     @State private var genre = "Fantasy"
     @State private var review = ""
     @State private var rating = 3
+    //@State private var date = Date()
+
     
     let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
     
@@ -51,6 +53,7 @@ struct AddBookView: View {
                         dismiss()
                     }
                 }
+                .disabled(title.isEmpty || author.isEmpty || review.isEmpty)
             }
             .navigationTitle("Add Book")
         }
