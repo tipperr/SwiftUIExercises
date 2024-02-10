@@ -1,90 +1,95 @@
 //
 //  ContentView.swift
-//  iExpense—SwiftData
+//  iExpense
 //
-//  Created by Ciaran Murphy on 2/9/24.
+//  Created by Ciaran Murphy on 1/16/24.
 //
-
+import SwiftData
 import SwiftUI
 
-struct ExpenseItem: Identifiable, Codable {
+@Model
+class ExpenseItem/*: Identifiable, Codable, Equatable*/ {
     var id = UUID()
     let name: String
     let type: String
     let amount: Double
+    
+    init(name: String, type: String, amount: Double) {
+        self.name = name
+        self.type = type
+        self.amount = amount
+    }
+    
 }
 
-@Observable
+/*@Observable
 class Expenses {
     var items = [ExpenseItem]() {
-    didSet {
-        if let encoded = try? JSONEncoder().encode(items){
-            UserDefaults.standard.set(encoded, forKey: "Items")
-        }
+        didSet {
+            if let encoded = try? JSONEncoder().encode(items) {
+                UserDefaults.standard.set(encoded, forKey: "Items")
+            }
         }
     }
-    init(){
-        if let savedItems = UserDefaults.standard.data(forKey: "Items"){
-            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems){
+
+    init() {
+        if let savedItems = UserDefaults.standard.data(forKey: "Items") {
+            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
                 items = decodedItems
                 return
             }
         }
+
         items = []
     }
-}
+}*/
 
 struct ContentView: View {
-    @State private var expenses = Expenses()
+    //@State private var expenses = Expenses()
+    @Environment(\.modelContext) var modelContext
+    @Query private var expenses: [ExpenseItem]
     @State private var showingAddExpense = false
 
     var body: some View {
         NavigationStack {
-            VStack{
-                Text("My Expenses")
-                    .font(.title)
-                List{
-                    ForEach(expenses.items /* not required due to "Identifiable", id:\.id*/){ item in
-                            HStack{
-                                VStack(alignment: .leading){
-                                    Text(item.name)
-                                        .font(.headline)
-                                    
-                                    Text(item.type)
-                                }
-                                
-                                Spacer()
-                                
-                                Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                    .foregroundStyle(item.amount >= 100 ? .green : (item.amount >= 10 ? .red : .blue))
-                            }
+            List {
+                ForEach(expenses) { item in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(item.name)
+                                .font(.headline)
+
+                            Text(item.type)
                         }
-                    .onDelete(perform: removeItems)
-                }
-                
-                }
-                .navigationTitle("iExpense")
-                .background(.pink)
-                .toolbar{
-                    Button("Add expense", systemImage: "plus"){
-                        showingAddExpense = true
-                        //This is for testing only:
-                        /*let expense = ExpenseItem(name: "Test", type: "Personal", amount: 5)
-                         expenses.items.append(expense)*/
+
+                        Spacer()
+
+                        Text(item.amount, format: .currency(code: "USD"))
                     }
                 }
-                .sheet(isPresented: $showingAddExpense){
-                    AddView(expenses: expenses)
+                .onDelete(perform: removeItems)
+            }
+            .navigationTitle("iExpense")
+            .toolbar {
+                Button("Add Expense", systemImage: "plus") {
+                    showingAddExpense = true
                 }
             }
+            .sheet(isPresented: $showingAddExpense) {
+                AddView(/*expenses: expenses*/)
+            }
         }
-    
-    
-    func removeItems(at offsets:IndexSet){
-        expenses.items.remove(atOffsets: offsets)
+    }
+
+    func removeItems(at offsets: IndexSet) {
+        for offset in offsets{
+            let item = expenses[offset]
+            modelContext.delete(item)
+        }
     }
 }
 
 #Preview {
     ContentView()
+        .modelContainer(for: ExpenseItem.self)
 }

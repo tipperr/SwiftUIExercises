@@ -1,14 +1,8 @@
-//
-//  iExpenseApp.swift
-//  iExpense
-//
-//  Created by Ciaran Murphy on 1/16/24.
-//
 import SwiftData
 import SwiftUI
 
 @main
-struct iExpense_SwiftDataApp: App {
+struct iExpense_TestApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
