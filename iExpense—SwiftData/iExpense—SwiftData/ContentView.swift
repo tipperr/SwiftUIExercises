@@ -49,10 +49,16 @@ struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @Query private var expenses: [ExpenseItem]
     @State private var showingAddExpense = false
+    @State private var expenseType = "All"
+    @State private var sortOrder = [
+        SortDescriptor(\ExpenseItem.name),
+        SortDescriptor(\ExpenseItem.amount),
+    ]
 
     var body: some View {
         NavigationStack {
-            List {
+            ExpensesView(type: expenseType, sortOrder: sortOrder)
+            /*List {
                 ForEach(expenses) { item in
                     HStack {
                         VStack(alignment: .leading) {
@@ -68,11 +74,26 @@ struct ContentView: View {
                     }
                 }
                 .onDelete(perform: removeItems)
-            }
+            }*/
             .navigationTitle("iExpense")
             .toolbar {
                 Button("Add Expense", systemImage: "plus") {
                     showingAddExpense = true
+                }
+                Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                    Picker("Sort", selection: $sortOrder) {
+                        Text("Sort by Name")
+                            .tag([
+                                SortDescriptor(\ExpenseItem.name),
+                                SortDescriptor(\ExpenseItem.amount),
+                            ])
+                        
+                        Text("Sort by Amount")
+                            .tag([
+                                SortDescriptor(\ExpenseItem.amount),
+                                SortDescriptor(\ExpenseItem.name)
+                            ])
+                    }
                 }
             }
             .sheet(isPresented: $showingAddExpense) {
