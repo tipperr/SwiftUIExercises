@@ -96,6 +96,20 @@ struct ContentView: View {
                             ])
                     }
                 }
+                Menu("Filter", systemImage: "line.3.horizontal.decrease.circle"){
+                    Picker("Filter", selection: $expenseType){
+                        Text("Show All")
+                            .tag("All")
+                        
+                        Divider()
+                        
+                        ForEach(AddView.types, id: \.self) { type in
+                            Text(type)
+                                .tag(type)
+                        }
+                    
+                    }
+                }
             }
             .sheet(isPresented: $showingAddExpense) {
                 AddView(/*expenses: expenses*/)

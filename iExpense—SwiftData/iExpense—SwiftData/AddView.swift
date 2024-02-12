@@ -18,7 +18,7 @@ struct AddView: View {
 
     //var expenses: Expenses
 
-    let types = ["Business", "Personal"]
+    static let types = ["Business", "Personal"]
 
     var body: some View {
         NavigationStack {
@@ -26,7 +26,7 @@ struct AddView: View {
                 TextField("Name", text: $name)
 
                 Picker("Type", selection: $type) {
-                    ForEach(types, id: \.self) {
+                    ForEach(AddView.types, id: \.self) {
                         Text($0)
                     }
                 }
