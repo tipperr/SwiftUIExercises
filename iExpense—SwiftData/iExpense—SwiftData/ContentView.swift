@@ -75,6 +75,7 @@ struct ContentView: View {
                 }
                 .onDelete(perform: removeItems)
             }*/
+            
             .navigationTitle("iExpense")
             .toolbar {
                 Button("Add Expense", systemImage: "plus") {
@@ -90,7 +91,7 @@ struct ContentView: View {
                         
                         Text("Sort by Amount")
                             .tag([
-                                SortDescriptor(\ExpenseItem.amount),
+                                SortDescriptor(\ExpenseItem.amount, order: .reverse),
                                 SortDescriptor(\ExpenseItem.name)
                             ])
                     }
@@ -102,12 +103,12 @@ struct ContentView: View {
         }
     }
 
-    func removeItems(at offsets: IndexSet) {
+    /*func removeItems(at offsets: IndexSet) {
         for offset in offsets{
             let item = expenses[offset]
             modelContext.delete(item)
         }
-    }
+    }*/
 }
 
 #Preview {

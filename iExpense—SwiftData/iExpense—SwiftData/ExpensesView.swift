@@ -27,6 +27,7 @@ struct ExpensesView: View {
                     Text(item.amount, format: .currency(code: "USD"))
                 }
             }
+            .onDelete(perform: removeItems)
         }
     }
     init(type: String = "All", sortOrder: [SortDescriptor<ExpenseItem>]) {
@@ -38,6 +39,13 @@ struct ExpensesView: View {
                 }
             }, sort: sortOrder)
         }
+    
+    func removeItems(at offsets: IndexSet) {
+        for offset in offsets{
+            let item = expenses[offset]
+            modelContext.delete(item)
+        }
+    }
 }
 
 #Preview {
