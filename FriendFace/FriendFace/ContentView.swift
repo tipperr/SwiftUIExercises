@@ -37,9 +37,15 @@ struct ContentView: View {
     var body: some View {
         NavigationStack{
             List(users, id: \.id){ user in
-                VStack(alignment: .leading){
+                //VStack(alignment: .leading){
+                HStack{
                     Text(user.name)
                         .font(.headline)
+                    
+                    Spacer()
+                    
+                    Text(user.isActive ? "Online" : "Offline")
+                        .foregroundStyle(user.isActive ? .blue : .red)
                 }
             }
             .task {
@@ -58,11 +64,10 @@ struct ContentView: View {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             users = try JSONDecoder().decode([User].self, from: data)
+            //print(String(data: data, encoding: .utf8) ?? "Invalid data")
         } catch {
             print("Invalid data")
         }
-        
-        //print(String(data: data, encoding: .utf8) ?? "Invalid data")
     }
 }
 
