@@ -6,7 +6,7 @@
 //
 
 //Sending and receiving Codable Data:
-/*import SwiftUI
+import SwiftUI
 
 struct Response: Codable {
     var results: [Result]
@@ -56,7 +56,7 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-}*/
+}
 
 
 //Loading an image from a remote server:
@@ -183,7 +183,7 @@ struct ContentView: View {
    ContentView()
 }*/
 //Codable Conformance for @Observation
-import SwiftUI
+/*import SwiftUI
 
 @Observable
 class User: Codable{
@@ -207,4 +207,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-}
+}*/
