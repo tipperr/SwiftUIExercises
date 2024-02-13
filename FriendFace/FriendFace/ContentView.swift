@@ -33,23 +33,29 @@ struct Friend: Codable {
 
 struct ContentView: View {
     @State private var users = [User]()
+    @State private var hasLoadedData = false
     
     var body: some View {
         NavigationStack{
             List(users, id: \.id){ user in
                 //VStack(alignment: .leading){
-                HStack{
-                    Text(user.name)
-                        .font(.headline)
-                    
-                    Spacer()
-                    
-                    Text(user.isActive ? "Online" : "Offline")
-                        .foregroundStyle(user.isActive ? .blue : .red)
+                NavigationLink(destination: UserView(user: user)){
+                    HStack{
+                        Text(user.name)
+                            .font(.headline)
+                        
+                        Spacer()
+                        
+                        Text(user.isActive ? "Online" : "Offline")
+                            .foregroundStyle(user.isActive ? .green : .secondary)
+                    }
                 }
             }
             .task {
-                await loadData()
+                if !hasLoadedData { // Check if data has been loaded
+                                   await loadData()
+                                   hasLoadedData = true // Set the flag to true after data is loaded
+                               }
             }
             .navigationTitle("FriendFace")
         }
