@@ -75,7 +75,6 @@ struct UserView: View {
                     }
                     .listRowBackground(Color.blue)
                 }
-                
                 //VStack{
                 /*Text("User ID: \(user.id)")
                  .padding()
@@ -110,24 +109,42 @@ struct UserView: View {
                 
                 Text("User Friends:")
                     .font(.title)
+                
+                /*ForEach(user.friends) { friend in
+                                    Text(friend.name)
+                                }*/
+                
+                /*List(user.friends ?? [], id: \.id) { friend in
+                    if let friendName = friend.name {
+                        Text(friendName)
+                            .listRowBackground(Color.blue)
+                            .padding()
+                    } else {
+                        // Handle case where friend name is nil
+                        Text("Unknown")
+                            .listRowBackground(Color.blue)
+                            .padding()
+                    }
+                }*/
+
                 List(user.friends.map { $0.name }, id: \.self) { friendName in
                     Text(friendName)
                         .listRowBackground(Color.blue)
                         .padding()
                     
                 }
-                .listRowBackground(Color.blue)
             }
             .background(.gray)
         }
             
-            .navigationTitle(user.name)
+            //.navigationTitle(user.name)
             .navigationBarTitleDisplayMode(.inline)
 
     }
+    
 }
 
-struct UserView_Previews: PreviewProvider {
+/*struct UserView_Previews: PreviewProvider {
     static var previews: some View {
         // Create a sample User object for preview
         let user = User(id: "123", isActive: false, name: "John Doe", age: 30, company: "Swiftify", email: "john@example.com", address: "123 Main St", about: "Lorem ipsum dolor sit amet", registered: "2022-01-01", tags: ["tag1", "tag2"], friends: [])
@@ -135,7 +152,7 @@ struct UserView_Previews: PreviewProvider {
         // Preview UserView with the sample User object
         UserView(user: user)
     }
-}
+}*/
 /*#Preview {
     UserView()
 }*/
