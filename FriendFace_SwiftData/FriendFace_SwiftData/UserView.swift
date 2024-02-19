@@ -22,7 +22,7 @@ struct UserView: View {
                         Text("User ID: ")
                             .font(.headline)
                         Spacer()
-                        Text(user.id)
+                        Text("\(user.id)")
                     }
                     .listRowBackground(Color.blue)
                     HStack{
@@ -71,7 +71,8 @@ struct UserView: View {
                         Text("Date Registered: ")
                             .font(.headline)
                         Spacer()
-                        Text(user.registered)
+                        Text("\(user.registered)")
+                        //Text(dateString(from: user.registered))
                     }
                     .listRowBackground(Color.blue)
                 }
@@ -141,6 +142,12 @@ struct UserView: View {
             .navigationBarTitleDisplayMode(.inline)
 
     }
+    
+    private func dateString(from date: Date) -> String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .long
+            return dateFormatter.string(from: date)
+        }
     
 }
 

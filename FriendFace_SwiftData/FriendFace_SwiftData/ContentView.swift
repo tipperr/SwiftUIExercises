@@ -14,7 +14,7 @@ import SwiftUI
 
 @Model
 class User: Codable {
-    var id: String
+    let id: UUID
     var isActive: Bool
     var name: String
     var age: Int
@@ -22,7 +22,7 @@ class User: Codable {
     var email: String
     var address: String
     var about: String
-    var registered: String
+    var registered: Date
     var tags: [String]
     var friends: [Friend]
     
@@ -32,7 +32,7 @@ class User: Codable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(String.self, forKey: .id)
+        id = try container.decode(UUID.self, forKey: .id)
         isActive = try container.decode(Bool.self, forKey: .isActive)
         name = try container.decode(String.self, forKey: .name)
         age = try container.decode(Int.self, forKey: .age)
@@ -40,7 +40,7 @@ class User: Codable {
         email = try container.decode(String.self, forKey: .email)
         address = try container.decode(String.self, forKey: .address)
         about = try container.decode(String.self, forKey: .about)
-        registered = try container.decode(String.self, forKey: .registered)
+        registered = try container.decode(Date.self, forKey: .registered)
         tags = try container.decode([String].self, forKey: .tags)
         friends = try container.decode([Friend].self, forKey: .friends)
         
@@ -71,13 +71,13 @@ class User: Codable {
             try container.encode(email, forKey: .email)
             try container.encode(address, forKey: .address)
             try container.encode(about, forKey: .about)
-            try container.encode(registered, forKey: .registered) // No need for date formatting
+            try container.encode(registered, forKey: .registered)
             try container.encode(tags, forKey: .tags)
             try container.encode(friends, forKey: .friends)
         }
         
     
-    init(id: String, isActive: Bool, name: String, age: Int, company: String, email: String, address: String, about: String, registered: String, tags: [String], friends: [Friend]) {
+    init(id: UUID, isActive: Bool, name: String, age: Int, company: String, email: String, address: String, about: String, registered: Date, tags: [String], friends: [Friend]) {
         self.id = id
         self.isActive = isActive
         self.name = name
@@ -96,7 +96,7 @@ class User: Codable {
 
 @Model
 class Friend: Codable {
-    var id: String
+    let id: UUID
     var name: String
     
     enum CodingKeys: CodingKey{
@@ -105,7 +105,7 @@ class Friend: Codable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(String.self, forKey: .id)
+        id = try container.decode(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         /*print("Decoding Friend with ID:", id)
         print("Decoding Friend with Name:", name)*/
@@ -117,7 +117,7 @@ class Friend: Codable {
         try container.encode(name, forKey: .name)
     }
     
-    init(id: String, name: String) {
+    init(id: UUID, name: String) {
         self.id = id
         self.name = name
     }
@@ -164,12 +164,13 @@ struct ContentView: View {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
             let downloadedUsers = try decoder.decode([User].self, from: data)
                         let insertContext = ModelContext(modelContext.container)
 
-                        for user in downloadedUsers {
-                            insertContext.insert(user)
-                        }
+            for user in downloadedUsers {
+                insertContext.insert(user)
+            }
 
                         try insertContext.save()
             //users = try JSONDecoder().decode([User].self, from: data)
