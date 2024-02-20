@@ -7,9 +7,14 @@
 
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import PhotosUI
 import SwiftUI
 
 struct ContentView: View {
+    @State private var pickerItem: PhotosPickerItem?
+    @State private var pickerItems = [PhotosPickerItem]()
+    @State private var selectedImage: Image?
+    @State private var selectedImages = [Image]()
     @State private var image: Image?
     //@State private var showingConfirmation = false
     //@State private var backgroundColor = Color.white
@@ -23,9 +28,48 @@ struct ContentView: View {
     
     
     var body: some View {
+        VStack{
+            /*PhotosPicker("Select a picture", selection: $pickerItems, maxSelectionCount: 4, matching: .images)*/
+            
+            PhotosPicker(selection: $pickerItems, maxSelectionCount: 4, matching: .any(of: [.images, .not(.screenshots)])){
+                Label("Select a picture", systemImage: "photo")
+            }
+            
+            ScrollView{
+                ForEach(0..<selectedImages.count, id:\.self){ i in
+                    selectedImages[i]
+                        .resizable()
+                        .scaledToFit()
+                    
+                }
+            }
+            
+            /*selectedImage?
+                .resizable()
+                .scaledToFit()*/
+        }
+        .onChange(of: pickerItems){
+            Task{
+                selectedImages.removeAll()
+                
+                for item in pickerItems{
+                    if let loadedImage = try await item.loadTransferable(type: Image.self){
+                        selectedImages.append(loadedImage)
+                    }
+                }
+            }
+        }
+        /*.onChange(of: pickerItem){
+            Task{
+                selectedImage = try await pickerItem?.loadTransferable(type: Image.self)
+            }
+        }*/
         
+        //ContentUnavailableView techniques:
         /*ContentUnavailableView("No Snippets", systemImage: "swift", description: Text("You don't have any saved snippets yet"))*/
-        ContentUnavailableView {
+        
+        
+        /*ContentUnavailableView {
             Label("No Snippets", systemImage: "swift")
         } description: {
             Text("You don't have any saved snippets yet")
@@ -34,8 +78,9 @@ struct ContentView: View {
                 
             }
             .buttonStyle(.borderedProminent)
-        }
+        }*/
         
+        //CoreImage integration:
         /*VStack{
             image?
                 .resizable()
