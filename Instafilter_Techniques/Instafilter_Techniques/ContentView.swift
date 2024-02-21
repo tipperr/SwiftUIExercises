@@ -8,9 +8,11 @@
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import PhotosUI
+import StoreKit
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.requestReview) var requestReview
     @State private var pickerItem: PhotosPickerItem?
     @State private var pickerItems = [PhotosPickerItem]()
     @State private var selectedImage: Image?
@@ -29,6 +31,23 @@ struct ContentView: View {
     
     var body: some View {
         VStack{
+            
+            let example = Image(.IMG_0027)
+            
+            Button("Leave a review"){
+                requestReview()
+            }
+            
+            ShareLink(item: example, preview: SharePreview("K4", image: example)){
+                Label("Click to share", systemImage: "airplane")
+            }
+            
+            ShareLink(item: URL(string: "https://www.google.com")!, subject: Text("Search the web here"), message: Text("Find something"))
+            
+            ShareLink(item: URL(string: "https://www.google.com")!){
+                Label("Search the web here!", systemImage: "swift")
+            }
+            
             /*PhotosPicker("Select a picture", selection: $pickerItems, maxSelectionCount: 4, matching: .images)*/
             
             PhotosPicker(selection: $pickerItems, maxSelectionCount: 4, matching: .any(of: [.images, .not(.screenshots)])){
