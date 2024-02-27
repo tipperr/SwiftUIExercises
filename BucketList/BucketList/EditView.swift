@@ -42,7 +42,7 @@ struct EditView: View {
                             
                             + Text(": ") +
                             
-                            Text("Page description here")
+                            Text(page.description)
                                 .italic()
                         }
                         
@@ -88,7 +88,7 @@ struct EditView: View {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let items = try JSONDecoder().decode(Result.self, from: data)
-            pages = items.query.pages.values.sorted { $0.title < $1.title }
+            pages = items.query.pages.values.sorted() /*{ $0.title < $1.title }*/
             loadingState = .loaded
         } catch {
             loadingState = .failed
