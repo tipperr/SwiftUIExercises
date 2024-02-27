@@ -14,6 +14,7 @@
 		D2BE604E2B8CBE7D00E1BD60 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE604D2B8CBE7D00E1BD60 /* Location.swift */; };
 		D2BE60502B8CD62100E1BD60 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE604F2B8CD62100E1BD60 /* EditView.swift */; };
 		D2BE60522B8D6F4100E1BD60 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE60512B8D6F4100E1BD60 /* Result.swift */; };
+		D2BE60542B8E2D2800E1BD60 /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE60532B8E2D2800E1BD60 /* ContentView-ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		D2BE604D2B8CBE7D00E1BD60 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		D2BE604F2B8CD62100E1BD60 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		D2BE60512B8D6F4100E1BD60 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		D2BE60532B8E2D2800E1BD60 /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				D2BE60412B8C03B100E1BD60 /* ContentView.swift */,
 				D2BE60512B8D6F4100E1BD60 /* Result.swift */,
 				D2BE604F2B8CD62100E1BD60 /* EditView.swift */,
+				D2BE60532B8E2D2800E1BD60 /* ContentView-ViewModel.swift */,
 				D2BE604D2B8CBE7D00E1BD60 /* Location.swift */,
 				D2BE60432B8C03B200E1BD60 /* Assets.xcassets */,
 				D2BE60452B8C03B200E1BD60 /* Preview Content */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2BE60422B8C03B100E1BD60 /* ContentView.swift in Sources */,
+				D2BE60542B8E2D2800E1BD60 /* ContentView-ViewModel.swift in Sources */,
 				D2BE60522B8D6F4100E1BD60 /* Result.swift in Sources */,
 				D2BE604E2B8CBE7D00E1BD60 /* Location.swift in Sources */,
 				D2BE60502B8CD62100E1BD60 /* EditView.swift in Sources */,
