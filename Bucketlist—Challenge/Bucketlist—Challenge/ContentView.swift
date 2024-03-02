@@ -75,7 +75,7 @@ struct ContentView: View {
                 } message: {
                     Text(viewModel.authenticationError)
                 }
-            alert("Authentication Failed", isPresented: $viewModel.noBiometrics){
+                .alert("Authentication Failed", isPresented: $viewModel.noBiometrics){
                 Button("OK"){}
             } message: {
                 Text(viewModel.authenticationError)

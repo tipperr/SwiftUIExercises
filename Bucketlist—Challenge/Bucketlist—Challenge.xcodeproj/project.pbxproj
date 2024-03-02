@@ -15,6 +15,7 @@
 		D2BE60722B8F67AF00E1BD60 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE60712B8F67AF00E1BD60 /* Location.swift */; };
 		D2BE60742B8F67C000E1BD60 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE60732B8F67C000E1BD60 /* Result.swift */; };
 		D2BE60762B8F67D600E1BD60 /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE60752B8F67D600E1BD60 /* ContentView-ViewModel.swift */; };
+		D2BE60782B90AE5900E1BD60 /* EditView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2BE60772B90AE5900E1BD60 /* EditView-ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		D2BE60712B8F67AF00E1BD60 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		D2BE60732B8F67C000E1BD60 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		D2BE60752B8F67D600E1BD60 /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
+		D2BE60772B90AE5900E1BD60 /* EditView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditView-ViewModel.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,11 +62,12 @@
 			isa = PBXGroup;
 			children = (
 				D2BE60612B8F66F200E1BD60 /* Bucketlist_ChallengeApp.swift */,
-				D2BE60632B8F66F200E1BD60 /* ContentView.swift */,
 				D2BE606F2B8F679900E1BD60 /* EditView.swift */,
+				D2BE60772B90AE5900E1BD60 /* EditView-ViewModel.swift */,
+				D2BE60632B8F66F200E1BD60 /* ContentView.swift */,
+				D2BE60752B8F67D600E1BD60 /* ContentView-ViewModel.swift */,
 				D2BE60712B8F67AF00E1BD60 /* Location.swift */,
 				D2BE60732B8F67C000E1BD60 /* Result.swift */,
-				D2BE60752B8F67D600E1BD60 /* ContentView-ViewModel.swift */,
 				D2BE60652B8F66F400E1BD60 /* Assets.xcassets */,
 				D2BE60672B8F66F400E1BD60 /* Preview Content */,
 			);
@@ -152,6 +155,7 @@
 				D2BE60642B8F66F200E1BD60 /* ContentView.swift in Sources */,
 				D2BE60762B8F67D600E1BD60 /* ContentView-ViewModel.swift in Sources */,
 				D2BE60742B8F67C000E1BD60 /* Result.swift in Sources */,
+				D2BE60782B90AE5900E1BD60 /* EditView-ViewModel.swift in Sources */,
 				D2BE60622B8F66F200E1BD60 /* Bucketlist_ChallengeApp.swift in Sources */,
 				D2BE60722B8F67AF00E1BD60 /* Location.swift in Sources */,
 				D2BE60702B8F679900E1BD60 /* EditView.swift in Sources */,
