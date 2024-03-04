@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+/*struct ContentView: View {
     let pictures = [
         "ales-krivec-15949",
         "galina-n-189483",
@@ -34,6 +34,24 @@ struct ContentView: View {
             .accessibilityLabel(labels[selectedPicture])
             .accessibilityAddTraits(.isButton)
             .accessibilityRemoveTraits(.isImage)
+    }
+}*/
+
+struct ContentView: View {
+    
+    var body: some View {
+        /*Image(decorative: "galina-n-189483")
+         .accessibilityHidden(true)
+         }*/
+        
+        VStack{
+            Text("Your score is")
+            Text("1000")
+                .font(.title)
+        }
+        .accessibilityElement(children: .combine)
+        //.accessibilityElement(children: .ignore)
+        //.accessibilityLabel("Your score is 1000")
     }
 }
 
