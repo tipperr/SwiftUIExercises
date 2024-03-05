@@ -55,7 +55,7 @@ import SwiftUI
     }
 }*/
 
-struct ContentView: View {
+/*struct ContentView: View {
     
     @State private var value = 10
     
@@ -85,7 +85,19 @@ struct ContentView: View {
             }
         }
     }
+}*/
+
+struct ContentView: View {
+    
+    var body: some View {
+        Button("John Fitzgerald Kennedy"){
+            print("Button Tapped")
+        }
+        .accessibilityInputLabels(["John Fitzgerald Kennedy", "Kennedy", "JFK"])
+    }
 }
+
+    
 
 #Preview {
     ContentView()
