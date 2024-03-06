@@ -21,8 +21,22 @@ struct FlagImage: View{
 
 struct ContentView: View {
     //@State private var showingAlert = false
-    @State var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
+    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
     @State var correctAnswer = Int.random(in: 0...2)
+    
+    @State private var labels = [
+        "Estonia": "Flag with three horizontal stripes. Top stripe is blue, middle stripe is black, bottom stripe is white.",
+        "France": "Flag with three vertical stripes. Left is blue, middle is white, right is red.",
+        "Germany": "Flag with three horizontal stripes. Top stripe is black, middle stripe is red, bottom stripe is yellow.",
+        "Ireland": "Flag with three vertical stripes. Left is green, middle is white, right is orange.",
+        "Italy": "Flag with three vertical stripes. Left is green, middle is white, right is red.",
+        "Nigeria": "Flag with three vertical stripes. Left is green, middle is white, right is green.",
+        "Poland": "Flag with two horizontal stripes. Top stripe is white, bottom stripe is red.",
+        "Spain": "Flag with three horizontal stripes. Top thin stripe is red, middle thick stripe is gold with a crest on the left, bottom thin stripe is red.",
+        "UK": "Flag with two overlapping red and white crosses, both vertically and diagonally, on a blue background.",
+        "Ukraine": "Flag with two horizontal stripes. Top stripe is blue, bottom stripe is yellow.",
+        "US": "Flag with thirteen alternating white and red stripes along with fifty white stars on a blue background in the top-left corner."
+    ]
     
     @State private var showingScore = false
     @State private var scoreTitle = ""
@@ -70,8 +84,7 @@ struct ContentView: View {
                                         bounce: 0.5)){
                                             animationAmount += (number == self.correctAnswer ? 360 : -360)
                                         }
-                        }
-                    label: {
+                        } label: {
                             /*Image(countries[number])
                                 .clipShape(.capsule)
                                 .shadow(radius: 5)*/
@@ -82,6 +95,7 @@ struct ContentView: View {
                                                     )
                                 .opacity((number != self.correctAnswer && self.tapped) ? 0.25 : 1)
                         }
+                        .accessibilityLabel(labels[countries[number], default: "Unknown Flag"])
                     }
                 }
                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
