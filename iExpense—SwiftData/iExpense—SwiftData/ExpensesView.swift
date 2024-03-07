@@ -26,6 +26,8 @@ struct ExpensesView: View {
                     
                     Text(item.amount, format: .currency(code: "USD"))
                 }
+                .accessibilityLabel("\(item.name), \(item.amount.formatted(.currency(code: "USD")))")
+                .accessibilityHint((item.type))
             }
             .onDelete(perform: removeItems)
         }
