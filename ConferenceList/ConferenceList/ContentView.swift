@@ -14,6 +14,10 @@ struct Attendee: Identifiable {
     var attendeeName: String
 }
 
+class Attendees: ObservableObject {
+    
+}
+
 struct ContentView: View {
     //@State private var conferenceList = []
     @State private var conferenceList = [Attendee]()
@@ -27,43 +31,47 @@ struct ContentView: View {
     
     
     var body: some View {
-        VStack {
-            PhotosPicker("Select a picture", selection: $pickerItem, matching: .images)
-            List{
-                ForEach(conferenceList) { item in
-                    HStack {
-                        item.image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50) // Adjust size as needed
-                        Spacer()
-                        Text(item.attendeeName)
+        NavigationView{
+            VStack {
+                PhotosPicker("Select a picture", selection: $pickerItem, matching: .images)
+                List{
+                    ForEach(conferenceList) { attendee in
+                        NavigationLink(destination: AttendeeView(attendee: attendee)){
+                            HStack {
+                                attendee.image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50) // Adjust size as needed
+                                Spacer()
+                                Text(attendee.attendeeName)
+                            }
+                        }
                     }
                 }
-            }
-            
-            .onChange(of: pickerItem) { _ in
-                Task {
-                    if let selectedImage = try await pickerItem?.loadTransferable(type: Image.self) {
-                        showingNameAlert.toggle()
-                        self.selectedImage = selectedImage
-
-                    }
-                }
-            }
-            .alert("Enter attendee's name", isPresented: $showingNameAlert) {
-                TextField("Attendee Name", text: $attendeeName)
                 
-                Button("OK") {
-
-                    let attendee = Attendee(image: selectedImage ?? Image(systemName: "photo"), attendeeName: attendeeName)
+                .onChange(of: pickerItem) { _ in
+                    Task {
+                        if let selectedImage = try await pickerItem?.loadTransferable(type: Image.self) {
+                            showingNameAlert.toggle()
+                            self.selectedImage = selectedImage
+                            
+                        }
+                    }
+                }
+                .alert("Enter attendee's name", isPresented: $showingNameAlert) {
+                    TextField("Attendee Name", text: $attendeeName)
                     
-                    conferenceList.append(attendee)
-                    
-                    selectedImage = nil
-                    attendeeName = "Attendee Name"
-                    
-                    showingNameAlert = false
+                    Button("OK") {
+                        
+                        let attendee = Attendee(image: selectedImage ?? Image(systemName: "photo"), attendeeName: attendeeName)
+                        
+                        conferenceList.append(attendee)
+                        
+                        selectedImage = nil
+                        attendeeName = "Attendee Name"
+                        
+                        showingNameAlert = false
+                    }
                 }
             }
         }
