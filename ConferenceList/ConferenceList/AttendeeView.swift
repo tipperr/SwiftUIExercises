@@ -13,11 +13,18 @@ struct AttendeeView: View {
     
     var body: some View {
         VStack{
+            Image(uiImage: UIImage(data: attendee.imageData) ?? UIImage(systemName: "person.circle.fill")!)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 400, height: 400)
+                        Text(attendee.attendeeName)
+                .font(.title)
+            /*
             attendee.image
                             .resizable()
                             .scaledToFit()
                             .frame(width: 300, height: 300)
-            Text(attendee.attendeeName)
+            Text(attendee.attendeeName)*/
             
         }
     }
@@ -25,7 +32,8 @@ struct AttendeeView: View {
 
 struct AttendeeView_Previews: PreviewProvider {
     static var previews: some View {
-        let attendee = Attendee(image: Image(systemName: "person.circle.fill"), attendeeName: "John Doe")
+        let imageData = Data() // Placeholder image data
+        let attendee = Attendee(imageData: imageData, attendeeName: "John Doe")
         return AttendeeView(attendee: attendee)
     }
 }
