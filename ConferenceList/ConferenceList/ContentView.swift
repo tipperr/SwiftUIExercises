@@ -14,10 +14,6 @@ struct Attendee: Identifiable {
     var attendeeName: String
 }
 
-class Attendees: ObservableObject {
-    
-}
-
 struct ContentView: View {
     //@State private var conferenceList = []
     @State private var conferenceList = [Attendee]()
@@ -36,12 +32,13 @@ struct ContentView: View {
                 PhotosPicker("Select a picture", selection: $pickerItem, matching: .images)
                 List{
                     ForEach(conferenceList) { attendee in
-                        NavigationLink(destination: AttendeeView(attendee: attendee)){
+                        NavigationLink(destination: AttendeeView(attendee: attendee)) {
+                            
                             HStack {
                                 attendee.image
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 50, height: 50) // Adjust size as needed
+                                    .frame(width: 50, height: 50)
                                 Spacer()
                                 Text(attendee.attendeeName)
                             }

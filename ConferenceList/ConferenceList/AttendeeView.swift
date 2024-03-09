@@ -14,11 +14,10 @@ struct AttendeeView: View {
     var body: some View {
         VStack{
             attendee.image
-                .resizable()
-                .scaledToFit()
-                .frame(width: 300, height: 300)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 300, height: 300)
             Text(attendee.attendeeName)
-                .font(.title)
             
         }
     }
