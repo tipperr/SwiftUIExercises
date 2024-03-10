@@ -18,14 +18,7 @@ struct AttendeeView: View {
                             .scaledToFit()
                             .frame(width: 400, height: 400)
                         Text(attendee.attendeeName)
-                .font(.title)
-            /*
-            attendee.image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 300, height: 300)
-            Text(attendee.attendeeName)*/
-            
+                .font(.title)            
         }
     }
 }

@@ -16,11 +16,39 @@ struct Attendee: Identifiable, Codable {
 }
 
 class Attendees: ObservableObject {
+    @Published var attendees = [Attendee]() {
+        didSet {
+            saveAttendees() // Save attendees whenever the list changes
+        }
+    }
     
+    init() {
+        loadAttendees() // Load attendees when the app starts
+    }
+    
+    private func saveAttendees() {
+        do {
+            let data = try JSONEncoder().encode(attendees)
+            UserDefaults.standard.set(data, forKey: "attendees")
+        } catch {
+            print("Error saving attendees: \(error)")
+        }
+    }
+    
+    private func loadAttendees() {
+        if let data = UserDefaults.standard.data(forKey: "attendees") {
+            do {
+                attendees = try JSONDecoder().decode([Attendee].self, from: data)
+            } catch {
+                print("Error loading attendees: \(error)")
+            }
+        }
+    }
 }
 
 struct ContentView: View {
     //@State private var conferenceList = []
+    @StateObject private var attendees = Attendees()
     @State private var conferenceList = [Attendee]()
     @State private var pickerItem: PhotosPickerItem?
     @State private var pickerItems = [PhotosPickerItem]()
@@ -37,22 +65,16 @@ struct ContentView: View {
             VStack {
                 PhotosPicker("Select a picture", selection: $pickerItem, matching: .images)
                 List{
-                    ForEach(conferenceList) { attendee in
+                    //ForEach(conferenceList) { attendee in
+                    ForEach(attendees.attendees) { attendee in
                         NavigationLink(destination: AttendeeView(attendee: attendee)){
                             HStack {
                                 Image(uiImage: UIImage(data: attendee.imageData) ?? UIImage(systemName: "person.circle.fill")!)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 50, height: 50) // Adjust size as needed
+                                    .frame(width: 50, height: 50)
                                 Spacer()
                                 Text(attendee.attendeeName)
-                            
-                                /*attendee.image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50) // Adjust size as needed
-                                Spacer()
-                                Text(attendee.attendeeName)*/
                             }
                         }
                     }
@@ -60,10 +82,6 @@ struct ContentView: View {
                 
                 .onChange(of: pickerItem) { _ in
                     Task {
-                        /*if let selectedImage = try await pickerItem?.loadTransferable(type: Image.self) {
-                            showingNameAlert.toggle()
-                            self.selectedImage = selectedImage
-                            */
                         if let imageData = try await pickerItem?.loadTransferable(type: Data.self) {
                             selectedImageData = imageData
                             showingNameAlert.toggle()
@@ -76,46 +94,18 @@ struct ContentView: View {
                     Button("OK") {
                         if let imageData = selectedImageData {
                             let attendee = Attendee(imageData: imageData, attendeeName: attendeeName)
-                            conferenceList.append(attendee)
+                            //conferenceList.append(attendee)
+                            attendees.attendees.append(attendee)
                         }
                         selectedImageData = nil
                         attendeeName = "Attendee Name"
                         showingNameAlert = false
-                    
-                        /*let attendee = Attendee(image: selectedImage ?? Image(systemName: "photo"), attendeeName: attendeeName)
-                        
-                        conferenceList.append(attendee)
-                        
-                        selectedImage = nil
-                        attendeeName = "Attendee Name"
-                        
-                        showingNameAlert = false*/
                     }
                 }
             }
         }
     }
-            
-            /*
-            .onChange(of: pickerItem) { _ in
-                Task {
-                    if let selectedImage = try await pickerItem?.loadTransferable(type: Image.self) {
-                        //let name = await promptForAttendeeName()
-                        let imageItem = ImageItem(image: selectedImage, attendeeName: name)
-                                                conferenceList.append(imageItem)
-                        showingNameAlert.toggle()
-                    }
-                        .alert("Enter attendee's name", isPresented: $showingNameAlert){
-                            TextField("Attendee Name", text: $attendeeName)
-                            Button("Ok", action: .submit)
-                        }
-                }
-            }
-        }
-    }*/
-    /*func promptForAttendeeName() async -> String {
-        return "Attendee Name"
-    }*/
+
 }
 
 
