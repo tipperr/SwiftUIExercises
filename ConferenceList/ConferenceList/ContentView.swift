@@ -5,6 +5,7 @@
 //  Created by Ciaran Murphy on 3/7/24.
 //
 
+import CoreLocation
 import PhotosUI
 import SwiftUI
 
@@ -46,6 +47,25 @@ class Attendees: ObservableObject {
     }
 }
 
+class LocationFetcher: NSObject, CLLocationManagerDelegate {
+    let manager = CLLocationManager()
+    var lastKnownLocation: CLLocationCoordinate2D?
+
+    override init() {
+        super.init()
+        manager.delegate = self
+    }
+
+    func start() {
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        lastKnownLocation = locations.first?.coordinate
+    }
+}
+
 struct ContentView: View {
     //@State private var conferenceList = []
     @StateObject private var attendees = Attendees()
@@ -58,7 +78,7 @@ struct ContentView: View {
     @State private var attendeeName = "Attendee Name"
     @State private var showingNameAlert = false
     @State private var showingAttendee = false
-    
+    let locationFetcher = LocationFetcher()
     
     var body: some View {
         NavigationView{
@@ -79,6 +99,20 @@ struct ContentView: View {
                         }
                     }
                 }
+                
+                VStack {
+                            Button("Start Tracking Location") {
+                                locationFetcher.start()
+                            }
+
+                            Button("Read Location") {
+                                if let location = locationFetcher.lastKnownLocation {
+                                    print("Your location is \(location)")
+                                } else {
+                                    print("Your location is unknown")
+                                }
+                            }
+                        }
                 
                 .onChange(of: pickerItem) { _ in
                     Task {

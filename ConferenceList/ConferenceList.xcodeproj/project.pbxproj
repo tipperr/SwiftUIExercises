@@ -21,6 +21,7 @@
 		D295751F2B99F7860055B965 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D29575222B99F7860055B965 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D295752B2B9B51AA0055B965 /* AttendeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeView.swift; sourceTree = "<group>"; };
+		D295752D2BA13E9D0055B965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +54,7 @@
 		D295751A2B99F7840055B965 /* ConferenceList */ = {
 			isa = PBXGroup;
 			children = (
+				D295752D2BA13E9D0055B965 /* Info.plist */,
 				D295751B2B99F7840055B965 /* ConferenceListApp.swift */,
 				D295751D2B99F7840055B965 /* ContentView.swift */,
 				D295752B2B9B51AA0055B965 /* AttendeeView.swift */,
@@ -278,6 +280,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ConferenceList/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ConferenceList/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I need to know where the conference attendees are";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -306,6 +310,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ConferenceList/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ConferenceList/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "I need to know where the conference attendees are";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
