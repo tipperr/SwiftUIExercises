@@ -35,14 +35,16 @@ struct AttendeeView: View {
                     .frame(width: 400, height: 400)
                 //Text("\(attendee.location)")
                 Map(position: $mapCameraPosition){
-                    /*Annotation(coordinate: attendee.location?.coordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0)){
+                    
+                    Annotation(attendee.attendeeName, coordinate: attendee.location?.coordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0)) {
                         Image(systemName: "star.circle")
                             .resizable()
                             .foregroundStyle(.red)
                             .frame(width: 44, height: 44)
                             .background(.white)
                             .clipShape(.circle)
-                    }*/
+                    }
+
                 }
             }
             .navigationTitle(attendee.attendeeName)

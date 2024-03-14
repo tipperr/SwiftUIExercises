@@ -128,7 +128,7 @@ class LocationFetcher: NSObject, CLLocationManagerDelegate {
                         }
                     }
                     
-                    VStack {
+                    /*VStack {
                         Button("Start Tracking Location") {
                             locationFetcher.start()
                         }
@@ -140,9 +140,10 @@ class LocationFetcher: NSObject, CLLocationManagerDelegate {
                                 print("Your location is unknown")
                             }
                         }
-                    }
+                    }*/
                     
                     .onChange(of: pickerItem) { _ in
+                        locationFetcher.start()
                         Task {
                             if let imageData = try await pickerItem?.loadTransferable(type: Data.self) {
                                 selectedImageData = imageData
@@ -152,7 +153,6 @@ class LocationFetcher: NSObject, CLLocationManagerDelegate {
                     }
                     .alert("Enter attendee's name", isPresented: $showingNameAlert) {
                         TextField("Attendee Name", text: $attendeeName)
-                        
                         Button("OK") {
                             if let imageData = selectedImageData {
                                 let attendee = Attendee(imageData: imageData, attendeeName: attendeeName, location: locationFetcher.lastKnownLocation)
