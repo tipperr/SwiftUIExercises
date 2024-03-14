@@ -22,7 +22,7 @@ struct AttendeeView: View {
 
             let codableCoordinate = CodableCoordinate(coordinate: coordinate)
                     
-            _mapCameraPosition = State(initialValue: .region(MKCoordinateRegion(center: codableCoordinate.coordinate, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))))
+            _mapCameraPosition = State(initialValue: .region(MKCoordinateRegion(center: codableCoordinate.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))))
 
         }
     
