@@ -134,7 +134,7 @@ struct ContentView: View {
 
  
 
-
+/*
  import SwiftUI
 
  struct ContentView: View {
@@ -159,6 +159,35 @@ struct ContentView: View {
                          backgroundColor = .blue
                      }
                  }))
+         }
+     }
+ }
+
+ #Preview {
+     ContentView()
+ }*/
+
+
+ import SwiftUI
+
+ struct ContentView: View {
+     var body: some View {
+         List {
+             Text("Taylor Swift")
+                 .swipeActions {
+                     Button("Delete", systemImage: "minus.circle", role: .destructive){
+                         print("Delete")
+                     }
+                     Button("Send Message", systemImage: "message"){
+                         print("Hi")
+                     }
+                 }
+                 .swipeActions(edge: .leading){
+                     Button("Pin", systemImage: "pin"){
+                         print("Pinning")
+                     }
+                     .tint(.orange)
+                 }
          }
      }
  }
