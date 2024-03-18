@@ -65,8 +65,8 @@ struct ContentView: View {
  }*/
 
 
-
- import SwiftUI
+//Result:
+/* import SwiftUI
 
  struct ContentView: View {
      @State private var output = ""
@@ -111,9 +111,62 @@ struct ContentView: View {
 
  #Preview {
      ContentView()
- }
+ }*/
 
  
+
+
+/* import SwiftUI
+
+ struct ContentView: View {
+     var body: some View {
+         Image(.example)
+             .interpolation(.none)
+             .resizable()
+             .scaledToFit()
+             .background(.black)
+     }
+ }
+
+ #Preview {
+     ContentView()
+ }*/
+
+ 
+
+
+ import SwiftUI
+
+ struct ContentView: View {
+     @State private var backgroundColor = Color.red
+     
+     var body: some View {
+         VStack {
+             Text("Hello, World!")
+                 .padding()
+                 .background(backgroundColor)
+             
+             Text("Change Color")
+                 .padding()
+                 .contextMenu(ContextMenu(menuItems: {
+                     Button("Red", systemImage: "checkmark.circle.fill"){
+                         backgroundColor = .red
+                     }
+                     Button("Green"){
+                         backgroundColor = .green
+                     }
+                     Button("Blue"){
+                         backgroundColor = .blue
+                     }
+                 }))
+         }
+     }
+ }
+
+ #Preview {
+     ContentView()
+ }
+
 
 /*
  import SwiftUI
