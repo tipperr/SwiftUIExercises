@@ -167,7 +167,7 @@ struct ContentView: View {
      ContentView()
  }*/
 
-
+/*
  import SwiftUI
 
  struct ContentView: View {
@@ -189,6 +189,67 @@ struct ContentView: View {
                      .tint(.orange)
                  }
          }
+     }
+ }
+
+ #Preview {
+     ContentView()
+ }*/
+
+
+/*
+ import SwiftUI
+import UserNotifications
+
+ struct ContentView: View {
+     var body: some View {
+         VStack {
+             Button("Request Permission"){
+                 UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]){ success, error in
+                     if success{
+                         print("All set!")
+                     } else if let error {
+                         print("Error:\(error.localizedDescription)")
+                     }
+                 }
+             }
+             .padding()
+             Button("Schedule Notification"){
+                 let content = UNMutableNotificationContent()
+                 content.title = "Feed the cat"
+                 content.subtitle = "It looks hungry"
+                 content.sound = UNNotificationSound.default
+                 
+                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                 
+                 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                 
+                 UNUserNotificationCenter.current().add(request)
+             }
+             .padding()
+         }
+     }
+ }
+
+ #Preview {
+     ContentView()
+ }*/
+
+
+import SamplePackage
+ import SwiftUI
+
+ struct ContentView: View {
+     let possibleNumbers = 1...60
+     
+     var results: String {
+         let selected = possibleNumbers.random(7).sorted()
+         let strings = selected.map(String.init)
+         return strings.formatted()
+     }
+     
+     var body: some View {
+         Text(results)
      }
  }
 
