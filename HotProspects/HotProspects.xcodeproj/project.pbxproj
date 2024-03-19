@@ -11,6 +11,9 @@
 		D295753D2BA3AE9D0055B965 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295753C2BA3AE9D0055B965 /* ContentView.swift */; };
 		D295753F2BA3AE9E0055B965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D295753E2BA3AE9E0055B965 /* Assets.xcassets */; };
 		D29575422BA3AE9E0055B965 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D29575412BA3AE9E0055B965 /* Preview Assets.xcassets */; };
+		D2EA24B82BAA494B00FF8025 /* ProspectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA24B72BAA494B00FF8025 /* ProspectsView.swift */; };
+		D2EA24BA2BAA495C00FF8025 /* MeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA24B92BAA495C00FF8025 /* MeView.swift */; };
+		D2EA24BC2BAA55E100FF8025 /* Prospect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EA24BB2BAA55E100FF8025 /* Prospect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		D295753C2BA3AE9D0055B965 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D295753E2BA3AE9E0055B965 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D29575412BA3AE9E0055B965 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D2EA24B72BAA494B00FF8025 /* ProspectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProspectsView.swift; sourceTree = "<group>"; };
+		D2EA24B92BAA495C00FF8025 /* MeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeView.swift; sourceTree = "<group>"; };
+		D2EA24BB2BAA55E100FF8025 /* Prospect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prospect.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +59,9 @@
 			children = (
 				D295753A2BA3AE9D0055B965 /* HotProspectsApp.swift */,
 				D295753C2BA3AE9D0055B965 /* ContentView.swift */,
+				D2EA24BB2BAA55E100FF8025 /* Prospect.swift */,
+				D2EA24B72BAA494B00FF8025 /* ProspectsView.swift */,
+				D2EA24B92BAA495C00FF8025 /* MeView.swift */,
 				D295753E2BA3AE9E0055B965 /* Assets.xcassets */,
 				D29575402BA3AE9E0055B965 /* Preview Content */,
 			);
@@ -137,6 +146,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2EA24BA2BAA495C00FF8025 /* MeView.swift in Sources */,
+				D2EA24BC2BAA55E100FF8025 /* Prospect.swift in Sources */,
+				D2EA24B82BAA494B00FF8025 /* ProspectsView.swift in Sources */,
 				D295753D2BA3AE9D0055B965 /* ContentView.swift in Sources */,
 				D295753B2BA3AE9D0055B965 /* HotProspectsApp.swift in Sources */,
 			);
@@ -272,6 +284,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HotProspects/Preview Content\"";
+				DEVELOPMENT_TEAM = VWG298PMW6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -300,6 +313,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HotProspects/Preview Content\"";
+				DEVELOPMENT_TEAM = VWG298PMW6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
