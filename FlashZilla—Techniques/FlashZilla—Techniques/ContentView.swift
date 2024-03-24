@@ -8,6 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    var body: some View{
+        VStack{
+            Text("Hello")
+            Spacer()
+                .frame(height: 100)
+            Text("World")
+        }
+        .contentShape(.rect)
+        .onTapGesture {
+            print("VStack Tapped")
+        }
+        
+//        ZStack{
+//            Rectangle()
+//                .fill(.blue)
+//                .frame(width: 300, height: 300)
+//                .onTapGesture {
+//                    print("Rectangle Tapped")
+//                }
+//            Circle()
+//                .fill(.red)
+//                .frame(width: 300, height: 300)
+//                .contentShape(.rect)
+//                .onTapGesture {
+//                    print("Circle tapped")
+//                }
+//                //.allowsHitTesting(false)
+//        }
+    }
+}
+
+/*struct ContentView: View {
 //    @State private var currentAmount = 0.0
 //    @State private var finalAmount = 1.0
     @State private var currentAmount = Angle.zero
@@ -85,7 +118,7 @@ struct ContentView: View {
                 }
         )*/
     }
-}
+}*/
 
 #Preview {
     ContentView()
