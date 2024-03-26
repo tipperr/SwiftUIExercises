@@ -7,22 +7,86 @@
 
 import SwiftUI
 
+func withOptionalAnimation<Result>(_ animation: Animation?  = .default, _ body: () throws -> Result) rethrows -> Result {
+    if UIAccessibility.isReduceMotionEnabled {
+        return try body()
+    } else {
+        return try withAnimation(animation, body)
+    }
+}
+
 struct ContentView: View {
-    let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common).autoconnect()
-    @State private var counter = 0
+//    let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common).autoconnect()
+//    @State private var counter = 0
+    //@Environment(\.scenePhase) var scenePhase
+    //@Environment(\.accessibilityReduceMotion) var accessibilityReduceMotion
+    @Environment(\.accessibilityReduceTransparency) var accessibilityReduceTransparency
+    //@State private var scale = 1.0
 
     
     var body: some View{
-        Text("Hello world!")
-            .onReceive(timer){ time in
-                if counter == 5 {
-                    timer.upstream.connect().cancel()
-                } else {
-                    print("The time is now \(time)")
-                }
-                
-                counter += 1
-            }
+        Text("Hello World")
+            .padding()
+            .background(accessibilityReduceTransparency ? .black : .black.opacity(0.5))
+            .foregroundStyle(.white)
+            .clipShape(.capsule)
+        
+        
+        //Motion Reduction:
+        
+//        Button("Hello World"){
+//            if accessibilityReduceMotion {
+//                scale *= 1.5
+//            } else {
+//                withAnimation {
+//                    scale *= 1.5
+//                }
+//            }
+//        }
+//        .scaleEffect(scale)
+        
+//        Button("Hello World"){
+//                withOptionalAnimation {
+//                    scale *= 1.5
+//                }
+//            }
+//        .scaleEffect(scale)
+        
+//        HStack{
+//            if accessibilityDifferentiateWithoutColor{
+//                Image(systemName: "checkmark.circle")
+//            }
+//            
+//            Text("Success")
+//        }
+//        .padding()
+//        .background(accessibilityDifferentiateWithoutColor ? .black : .green)
+//        .foregroundStyle(.white)
+//        .clipShape(.capsule)
+        
+        //Scene Phases
+//        Text("Hello world!")
+//            .onChange(of: scenePhase) { oldPhase, newPhase in
+//                if newPhase == .active {
+//                    print("Active")
+//                } else if newPhase == .inactive {
+//                    print("Inactive")
+//                } else if newPhase == .background {
+//                    print("Background")
+//                }
+//                
+//            }
+        
+        //Timer
+//            .onReceive(timer){ time in
+//                if counter == 5 {
+//                    timer.upstream.connect().cancel()
+//                } else {
+//                    print("The time is now \(time)")
+//                }
+//                
+//                counter += 1
+//            }
     }
         
         
