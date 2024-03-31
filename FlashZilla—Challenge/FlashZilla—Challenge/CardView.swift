@@ -11,6 +11,7 @@ struct CardView: View {
     @Environment(\.accessibilityVoiceOverEnabled) var accessibilityVoiceOverEnabled
     @State private var isShowingAnswer = false
     @State private var offset = CGSize.zero
+    @State private var previousOffset = 0.0
     
     let card: Card
     
@@ -30,7 +31,7 @@ struct CardView: View {
                     accessibilityDifferentiateWithoutColor
                     ? nil
                     : RoundedRectangle(cornerRadius: 25)
-                        .fill(offset.width > 0 ? .green : .red)
+                        .fill(offset.width > 0 ? .green : (offset.width < 0 ? .red : .white))
                 )
                 .shadow(radius: 10)
             
@@ -61,22 +62,27 @@ struct CardView: View {
             DragGesture()
                 .onChanged{ gesture in
                     offset = gesture.translation
+                    print(offset.width)
                 }
         
                 
                 .onEnded { _ in
+                    print(offset.width)
                     if abs(offset.width) > 100 {
                         removal?()
                 
                     } else {
+                        previousOffset = offset.width
                         offset = .zero
+                        print("Previous offset: \(previousOffset); New offset: \(offset.width)")
             }
+                    print(offset)
         }
             )
         .onTapGesture {
             isShowingAnswer.toggle()
         }
-        .animation(.default, value: offset)
+        .animation(.default, value: offset.width)
     }
 }
 
