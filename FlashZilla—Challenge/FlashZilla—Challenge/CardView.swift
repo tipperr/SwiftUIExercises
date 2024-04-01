@@ -15,7 +15,7 @@ struct CardView: View {
     
     let card: Card
     
-    var removal: (() -> Void)? = nil
+    var removal: ((Bool) -> Void)? = nil
     
     var body: some View {
         ZStack {
@@ -62,21 +62,21 @@ struct CardView: View {
             DragGesture()
                 .onChanged{ gesture in
                     offset = gesture.translation
-                    print(offset.width)
                 }
         
                 
                 .onEnded { _ in
-                    print(offset.width)
                     if abs(offset.width) > 100 {
-                        removal?()
+                        if offset.width > 0 {
+                            removal?(false)
+                        } else {
+                            removal?(true)
+                            offset = .zero
+                        }
                 
                     } else {
-                        previousOffset = offset.width
                         offset = .zero
-                        print("Previous offset: \(previousOffset); New offset: \(offset.width)")
-            }
-                    print(offset)
+                    }
         }
             )
         .onTapGesture {
