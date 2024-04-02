@@ -22,7 +22,7 @@ struct ContentView: View {
     
     @Environment(\.accessibilityVoiceOverEnabled) var accessibilityVoiceOverEnabled
     
-    @State private var timeRemaining = 5
+    @State private var timeRemaining = 100
     @State private var showingEditScreen = false
     
     @Environment(\.scenePhase) var scenePhase
@@ -50,6 +50,7 @@ struct ContentView: View {
                         let index = cards.firstIndex(of: card)!
                         CardView(card: card/*s[index]*/) { reinsert in
                             withAnimation{
+                                print("Showing \(index)")
                                 removeCard(at: index, reinsert: reinsert)
                             }
                         }
@@ -60,13 +61,13 @@ struct ContentView: View {
                 }
                 .allowsHitTesting(timeRemaining > 0)
                 
-                if cards.isEmpty {
+                //if cards.isEmpty {
                     Button("Start Again", action: resetCards)
                         .padding()
                         .background(.white)
                         .foregroundStyle(.black)
                         .clipShape(.capsule)
-                }
+                //}
             }
             
             VStack {
@@ -125,6 +126,7 @@ struct ContentView: View {
                 }
             }
         }
+        .onAppear(perform: loadData)
         .onReceive(timer) { time in
             guard isActive else { return }
             
@@ -151,8 +153,10 @@ struct ContentView: View {
         
         if reinsert {
             cards.move(fromOffsets: IndexSet(integer: index), toOffset: 0)
+            print("Moved Card at \(index)")
         } else {
             cards.remove(at: index)
+            print("Removed Card at \(index)")
         }
         
         //cards.remove(at: index)
@@ -169,18 +173,49 @@ struct ContentView: View {
     
     func resetCards() {
         //cards = Array<Card>(repeating: .example, count: 10)
-        
+        print("Reset")
         timeRemaining = 100
         isActive = true
         loadData()
+        //print("Reset")
     }
     
-    func loadData() {
+    /*func loadData() {
         if let data = UserDefaults.standard.data(forKey: "Cards") {
             if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
                 cards = decoded
+                print("Loaded Data \(Date.now), \(cards.count) cards")
             }
         }
+    }*/
+    
+    func loadData() {
+        let filename = getDocumentsDirectory().appendingPathComponent("cards.json")
+        do {
+            let data = try Data(contentsOf: filename)
+            cards = try JSONDecoder().decode([Card].self, from: data)
+            print("Loaded Data")
+        } catch {
+            print("Unable to load data.")
+        }
+    }
+
+    func saveData() {
+        do {
+            let filename = getDocumentsDirectory().appendingPathComponent("cards.json")
+            let data = try JSONEncoder().encode(cards)
+            try data.write(to: filename, options: [.atomicWrite, .completeFileProtection])
+            print("Saved data")
+        } catch {
+            print("Unable to save data.")
+        }
+    }
+
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        print("acquired path")
+        return paths[0]
     }
 
 }

@@ -42,6 +42,35 @@ struct EditCards: View {
     }
     
     func loadData() {
+        let filename = getDocumentsDirectory().appendingPathComponent("cards.json")
+        do {
+            let data = try Data(contentsOf: filename)
+            cards = try JSONDecoder().decode([Card].self, from: data)
+            print("Loaded data (editcards)")
+        } catch {
+            print("Unable to load data.")
+        }
+    }
+
+    func saveData() {
+        do {
+            let filename = getDocumentsDirectory().appendingPathComponent("cards.json")
+            let data = try JSONEncoder().encode(cards)
+            try data.write(to: filename, options: [.atomicWrite, .completeFileProtection])
+            print("Saved data (editcards)")
+        } catch {
+            print("Unable to save data.")
+        }
+    }
+
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        print("acquired path (editCards)")
+        return paths[0]
+    }
+    
+    /*func loadData() {
         if let data = UserDefaults.standard.data(forKey: "Cards") {
             if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
                 cards = decoded
@@ -53,7 +82,7 @@ struct EditCards: View {
         if let data = try? JSONEncoder().encode(cards) {
             UserDefaults.standard.set(data, forKey: "Cards")
         }
-    }
+    }*/
     
     func addCard() {
         let trimmedPrompt = newPrompt.trimmingCharacters(in: .whitespaces)
