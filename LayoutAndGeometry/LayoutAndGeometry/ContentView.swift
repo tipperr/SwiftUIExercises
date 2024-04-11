@@ -304,12 +304,20 @@ struct ContentView: View {
             ScrollView(.vertical) {
                 ForEach(0..<50) { index in
                     GeometryReader { proxy in
+                        let yOffset = proxy.frame(in: .global).minY
+                        let scaleFactor = max(1 - (yOffset / fullView.size.height), 0.5)
+                        let hue = Double(proxy.frame(in: .global).minY) / Double(fullView.size.height)
+
+                        
                         Text("Row #\(index)")
                             .font(.title)
                             .frame(maxWidth: .infinity)
-                            .background(colors[index % 7])
+                            //.background(colors[index % 7])
+                            .background(Color(hue: hue, saturation: 1.0, brightness: 1.0))
+
                             .rotation3DEffect(.degrees(proxy.frame(in: .global).minY - fullView.size.height / 2) / 5, axis: (x: 0, y: 1, z: 0))
                             .opacity(opacity(for: proxy.frame(in: .global).minY))
+                            .scaleEffect(scaleFactor)
 
                     }
                     .frame(height: 40)
