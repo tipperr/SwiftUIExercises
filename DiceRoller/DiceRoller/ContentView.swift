@@ -18,6 +18,8 @@ struct ContentView: View {
     
     @State private var previousRolls = [[Int]]()
     
+    @State private var haptics = false
+    
     var sideOptions = [4, 6, 8, 10, 12, 20, 100]
     
     let previousRollsKey = "PreviousRolls"
@@ -60,12 +62,13 @@ struct ContentView: View {
             Button("Roll"){
                 roll(sides: sides)
                 print(previousRolls)
+                haptics = true
             }
-            //.sensoryFeedback(.increase, trigger: roll)
             .foregroundStyle(.white)
             .padding()
             .background(.blue)
             .clipShape(.capsule)
+            .sensoryFeedback(.success, trigger: haptics)
             
             List{
                 ForEach(previousRolls.reversed(), id:\.self){ rolls in
@@ -104,6 +107,11 @@ struct ContentView: View {
             
             previousRolls.append(thisRoll)
             savePreviousRolls()
+            //haptics = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                haptics = false // Reset haptics to false after a short delay
+            }
         }
     
     func savePreviousRolls() {
