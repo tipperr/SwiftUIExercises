@@ -99,29 +99,58 @@ struct UserView: View {
 //    }
 //}
 
-struct ContentView: View {
-    @State private var searchText = ""
-    let allNames = ["Subh", "Vina", "Melvin", "Stefanie"]
-    
-    var filteredNames: [String] {
-        if searchText.isEmpty{
-            allNames
-        } else {
-            allNames.filter{ name in
-                name.localizedStandardContains(searchText)
-            }
-        }
-    }
+//struct ContentView: View {
+//    @State private var searchText = ""
+//    let allNames = ["Subh", "Vina", "Melvin", "Stefanie"]
+//    
+//    var filteredNames: [String] {
+//        if searchText.isEmpty{
+//            allNames
+//        } else {
+//            allNames.filter{ name in
+//                name.localizedStandardContains(searchText)
+//            }
+//        }
+//    }
+//    
+//    var body: some View {
+//        NavigationStack{
+//            //Text("Searching for \(searchText)")
+//            List(filteredNames, id: \.self){ name in
+//                Text(name)
+//            }
+//                .searchable(text: $searchText, prompt: "Look for something")
+//                .navigationTitle("Searching")
+//        }
+//    }
+//}
+
+@Observable
+class Player {
+    var name = "Anonymous"
+    var highScore = 0
+}
+
+struct HighScoreView: View {
+    //var player: Player
+    @Environment(Player.self) var player
+
     
     var body: some View {
-        NavigationStack{
-            //Text("Searching for \(searchText)")
-            List(filteredNames, id: \.self){ name in
-                Text(name)
-            }
-                .searchable(text: $searchText, prompt: "Look for something")
-                .navigationTitle("Searching")
+        Text("Your High Score Is: \(player.highScore)")
+    }
+}
+
+struct ContentView: View {
+    @State private var player = Player()
+    
+    var body: some View {
+        VStack{
+            Text("Welcome!")
+            //HighScoreView(/*player: player*/)
+            HighScoreView()
         }
+        .environment(player)
     }
 }
 
