@@ -57,45 +57,71 @@ struct UserView: View {
 //    }
 //}
 
+//struct ContentView: View {
+//    @State private var layoutVertically = false
+//    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+//    
+//    var body: some View {
+//        
+//        ViewThatFits{
+//            Rectangle()
+//                .frame(width: 500, height: 200)
+//            
+//            Circle()
+//                .frame(width: 200, height: 200)
+//        }
+//        
+////        if horizontalSizeClass == .compact {
+////            //if layoutVertically {
+////                VStack{
+////                    UserView()
+////                }
+////            } else {
+////                HStack {
+////                    UserView()
+////                }
+////            }
+//        
+//        
+////        Button{
+////            layoutVertically.toggle()
+////        } label: {
+////            if layoutVertically {
+////                VStack{
+////                    UserView()
+////                }
+////            } else {
+////                HStack {
+////                    UserView()
+////                }
+////            }
+////        }
+//    }
+//}
+
 struct ContentView: View {
-    @State private var layoutVertically = false
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @State private var searchText = ""
+    let allNames = ["Subh", "Vina", "Melvin", "Stefanie"]
+    
+    var filteredNames: [String] {
+        if searchText.isEmpty{
+            allNames
+        } else {
+            allNames.filter{ name in
+                name.localizedStandardContains(searchText)
+            }
+        }
+    }
     
     var body: some View {
-        
-        ViewThatFits{
-            Rectangle()
-                .frame(width: 500, height: 200)
-            
-            Circle()
-                .frame(width: 200, height: 200)
+        NavigationStack{
+            //Text("Searching for \(searchText)")
+            List(filteredNames, id: \.self){ name in
+                Text(name)
+            }
+                .searchable(text: $searchText, prompt: "Look for something")
+                .navigationTitle("Searching")
         }
-        
-//        if horizontalSizeClass == .compact {
-//            //if layoutVertically {
-//                VStack{
-//                    UserView()
-//                }
-//            } else {
-//                HStack {
-//                    UserView()
-//                }
-//            }
-        
-        
-//        Button{
-//            layoutVertically.toggle()
-//        } label: {
-//            if layoutVertically {
-//                VStack{
-//                    UserView()
-//                }
-//            } else {
-//                HStack {
-//                    UserView()
-//                }
-//            }
-//        }
     }
 }
 
