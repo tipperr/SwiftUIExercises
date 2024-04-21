@@ -24,6 +24,7 @@ struct ResortView: View {
                     .resizable()
                     .scaledToFit()
                 
+
                 HStack {
                     if horizontalSizeClass == .compact && dynamicTypeSize > .large{
                         VStack(spacing: 10) {                     ResortDetailsView(resort: resort)
@@ -38,6 +39,13 @@ struct ResortView: View {
                 }
                 .padding(.vertical)
                 .background(.primary.opacity(0.1))
+                
+                HStack{
+                    Spacer()
+                    Text("Photo Credit: \(resort.imageCredit)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
                 
                 Group{
                     Text(resort.description)
