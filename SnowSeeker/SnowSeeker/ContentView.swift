@@ -38,6 +38,7 @@ struct ContentView: View {
     
     @State private var searchText = ""
     @State private var sortingCriteria: SortingCriteria = .name
+    @State private var favorites = Favorites()
     
     var filteredResorts: [Resort]{
         if searchText.isEmpty {
@@ -82,6 +83,15 @@ struct ContentView: View {
                             Text("\(resort.runs) runs")
                                 .foregroundStyle(.secondary)
                         }
+                        
+                        if favorites.contains(resort){
+                            Spacer()
+                            Image(systemName: "heart.fill")
+                                .accessibilityLabel("This is a favorite resort")
+                                .foregroundStyle(.red)
+                        } else {
+                            
+                        }
                     }
                 }
             }
@@ -93,19 +103,7 @@ struct ContentView: View {
         } detail: {
             WelcomeView()
         }
-        .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Menu {
-                            Picker("Sort By", selection: $sortingCriteria) {
-                                ForEach(SortingCriteria.allCases, id: \.self) { criteria in
-                                    Text(criteria.description).tag(criteria)
-                                }
-                            }
-                        } label: {
-                            Label("Sort By", systemImage: "arrow.up.arrow.down")
-                        }
-                    }
-                }
+        .environment(favorites)
     }
 }
 
